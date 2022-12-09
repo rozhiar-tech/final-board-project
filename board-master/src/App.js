@@ -9,16 +9,15 @@ import Login from "./page/Login";
 import Profile from "./page/Profile";
 import { motion } from "framer-motion";
 
-import app from './firebase/initFirebase'
+import app from "./firebase/initFirebase";
 
 console.log(app);
-
 
 function App() {
   return (
     <div className="App  dark:bg-[#121212]  min-h-screen w-full flex justify-start ">
       <div>
-        <div className=" h-full relative overflow-hidden  bg-[#6200ee] w-52">
+        <div className=" min-h-full relative rounded-r-full overflow-hidden w-52">
           <SideBar></SideBar>
         </div>
       </div>

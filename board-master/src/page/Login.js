@@ -4,14 +4,13 @@ import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
-import { getAuth , signInWithEmailAndPassword  } from "firebase/auth";
-import app from '../firebase/initFirebase'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import app from "../firebase/initFirebase";
 import { Route } from "react-router";
 import Home from "./Home";
 const auth = getAuth(app);
 
 export default function Login() {
-  
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,23 +25,22 @@ export default function Login() {
     onSubmit: (values) => {
       // in here send the values to the firebase login
       signInWithEmailAndPassword(auth, values.email, values.password)
-      .then((userCredential) => {
-        // Signed in 
-        
-        const user = userCredential.displayName;
-        console.log(user.uid);
-        
-        if (user.uid!=="") {
-          //Add the route here to the home page
-        // <Route path="/" element={<Home></Home>}></Route>
-          
-        }        
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
+        .then((userCredential) => {
+          // Signed in
+
+          const user = userCredential.displayName;
+          console.log(user.uid);
+
+          if (user.uid !== "") {
+            //Add the route here to the home page
+            // <Route path="/" element={<Home></Home>}></Route>
+          }
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
       console.log(values.email, values.password);
     },
   });
@@ -56,7 +54,6 @@ export default function Login() {
       // ...
     } else {
       // User is signed out
-
       // ...
     }
   });
@@ -126,7 +123,7 @@ export default function Login() {
               </label>
             </div>
           </label>
-          <button className="w-96 text-[#ffffff] bg-[#018786] dark:text-[#121212] text-3xl dark:bg-[#03dac6] hover:scale-110 transition-all hover:shadow-2xl active:shadow-lg px-3 py-3 rounded-full">
+          <button className="w-96 active:scale-100 text-[#ffffff] bg-[#018786] dark:text-[#121212] text-3xl dark:bg-[#03dac6] hover:scale-110 transition-all hover:shadow-2xl active:shadow-lg px-3 py-3 rounded-full">
             Login
           </button>
         </form>

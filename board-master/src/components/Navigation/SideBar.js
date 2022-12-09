@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import ModeToggle from "../theme/ModeToggle";
+import { motion } from "framer-motion";
 export default function SideBar() {
   const { projects } = useParams();
 
@@ -43,7 +44,12 @@ export default function SideBar() {
   ];
 
   return (
-    <div className=" h-full ml-5  fixed  text-[#ffffff]">
+    <motion.div
+      initial={{ opacity: 1, translateX: -300 }}
+      animate={{ opacity: 1, translateX: 0 }}
+      transition={{ duration: 0.95, ease: "easeOut" }}
+      className=" h-full pl-5 rounded-r-full overflow-hidden  bg-[#6200ee] w-52  fixed  text-[#ffffff]"
+    >
       <ul className="flex mx-5 flex-col h-full w-48 items-start font-Main justify-center gap-10">
         {pages.map((page) => (
           <li className="">
@@ -66,6 +72,6 @@ export default function SideBar() {
           <ModeToggle></ModeToggle>
         </li>
       </ul>
-    </div>
+    </motion.div>
   );
 }
