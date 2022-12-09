@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
-export default function ModeToggle() {
-  const [theme, setTheme] = useState("light");
+export default function ModeToggle({ theme, setTheme }) {
   const [enabled, setEnabled] = useState(false);
   useEffect(() => {
     if (theme === "dark") {

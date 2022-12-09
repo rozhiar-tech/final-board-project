@@ -7,18 +7,20 @@ import Projects from "./page/Projects";
 import SideBar from "./components/Navigation/SideBar";
 import Login from "./page/Login";
 import Profile from "./page/Profile";
+import { useState } from "react";
+
 import { motion } from "framer-motion";
 
 import app from "./firebase/initFirebase";
-
 console.log(app);
 
 function App() {
+  const [theme, setTheme] = useState("light");
   return (
     <div className="App  dark:bg-[#121212]  min-h-screen w-full flex justify-start ">
       <div>
         <div className=" min-h-full relative rounded-r-full overflow-hidden w-52">
-          <SideBar></SideBar>
+          <SideBar theme={theme} setTheme={setTheme}></SideBar>
         </div>
       </div>
 
@@ -28,7 +30,10 @@ function App() {
 
           <Route path="/projects" element={<Projects></Projects>}></Route>
           <Route path="/Addproject" element={<AddProject></AddProject>}></Route>
-          <Route path="/login" element={<Login></Login>}></Route>
+          <Route
+            path="/login"
+            element={<Login theme={theme} setTheme={setTheme}></Login>}
+          ></Route>
           <Route path="/profile" element={<Profile></Profile>}></Route>
         </Routes>
       </div>
