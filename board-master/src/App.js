@@ -30,7 +30,7 @@ function App() {
         </div>
       </div>
 
-      <div className="min-h-full w-full mx-16  dark:bg-[#121212]">
+      <div className="min-h-full w-full mx-20  dark:bg-[#121212]">
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
 

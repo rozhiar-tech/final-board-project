@@ -1,5 +1,5 @@
 import React from "react";
-import LoginSvgLight from "../components/svg/LoginSvgLight";
+import LoginSvgLight from "../svg/LoginSvgLight";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from "../firebase/initFirebase";
 import { Route } from "react-router";
 import Home from "./Home";
-import LoginSvgDark from "../components/svg/LoginSvgDark";
+import LoginSvgDark from "../svg/LoginSvgDark";
 const auth = getAuth(app);
 
 export default function Login({ theme, setTheme, useAuth, setUserAuth }) {
