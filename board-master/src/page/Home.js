@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import HomeSvgOne from "../svg/HomeSvgOne";
 // import LogoSvg from "../page/img/Minimal_Initial_Letter_Logo.svg";
-import LogoSvg from "../page/img/Minimal_Initial_Letter_Logo.svg";
+// import LogoSvg from "../page/img/Minimal_Initial_Letter_Logo.svg";
 import DeviceFeature from "../components/FeatureComponent/DeviceFeature";
 import { useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";

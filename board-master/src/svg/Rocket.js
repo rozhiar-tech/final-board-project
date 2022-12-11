@@ -1,10 +1,11 @@
 import React from "react";
+import logo from "./starmon.svg";
 
 export default function Rocket() {
   return (
     <div>
 
-    <img src={`./Minimal Initial Letter Logo.svg`}/>
+    <img src={logo} alt="logo"/>
       {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         data-name="Layer 1"
