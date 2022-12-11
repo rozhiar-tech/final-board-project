@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import ModeToggle from "../theme/ModeToggle";
 import { motion } from "framer-motion";
+import { getAuth, signOut } from "firebase/auth";
 export default function SideBar({ theme, setTheme, userAuth, setUserAuth }) {
   const { projects } = useParams();
 
@@ -57,6 +58,13 @@ export default function SideBar({ theme, setTheme, userAuth, setUserAuth }) {
               onClick={() => {
                 //Logout from client ==> setUserAuth(false)
                 //Write code logout from firebase
+                const auth = getAuth();
+              signOut(auth).then(() => {
+                // Sign-out successful.
+                console.log("Sign-out successful.");
+              }).catch((error) => {
+                // An error happened.
+              });
               }}
               className="`transition-all  py-3 w-48 hover:px-5 transition-all duration-150 rounded-l-full hover:scale-110 hover:bg-[#b00020]  dark:hover:bg-[#cf6679] text-3xl  flex gap-3 justify-start items-center `"
             >

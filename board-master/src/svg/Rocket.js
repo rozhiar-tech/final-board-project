@@ -3,7 +3,9 @@ import React from "react";
 export default function Rocket() {
   return (
     <div>
-      <svg
+
+    <img src={`./Minimal Initial Letter Logo.svg`}/>
+      {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         data-name="Layer 1"
         width="602.41854"
@@ -217,7 +219,7 @@ export default function Rocket() {
           transform="translate(-148.79073 -36.89661)"
           fill="#3f3d56"
         />
-      </svg>
+      </svg> */}
     </div>
   );
 }
