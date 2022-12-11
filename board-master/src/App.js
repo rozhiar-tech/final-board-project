@@ -30,7 +30,7 @@ function App() {
         </div>
       </div>
 
-      <div className="min-h-full w-full mx-20  dark:bg-[#121212]">
+      <div className="min-h-full w-full mx-20 py-24 dark:bg-[#121212]">
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
 
@@ -47,7 +47,7 @@ function App() {
           <Route
             path="/Addproject"
             element={
-              userAuth ? (
+              userAuth && userAuth ? (
                 <AddProject></AddProject>
               ) : (
                 <Navigate replace to="/login"></Navigate>

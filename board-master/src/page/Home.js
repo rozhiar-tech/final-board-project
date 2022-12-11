@@ -36,7 +36,7 @@ export default function Home({ userAuth }) {
       className="min-h-full w-full dark:bg-[#121212]"
     >
       <div className="flex justify-around items-center">
-        <div className="py-20 gap-16 flex flex-col justify-start items-start">
+        <div className=" gap-16 flex flex-col justify-start items-start">
           <div>
             <h1 className="text-6xl  dark:text-[#fff]  text-[#121212]  font-Main">
               {" "}
