@@ -13,7 +13,10 @@ import ReportFeature from "../components/FeatureComponent/PeportFeature";
 import UnderLineCurve from "../svg/UnderLineCurve";
 import UnderLine from "../svg/UnderLine";
 import Rocket from "../svg/Rocket";
-export default function Home({ userAuth }) {
+import DarkLogo from "../page/img/DarkMode.svg";
+import LightLogo from "../page/img/LightMode.svg";
+
+export default function Home({ userAuth, theme }) {
   const control = useAnimation();
   const [ref, inView] = useInView();
   useEffect(() => {
@@ -59,7 +62,10 @@ export default function Home({ userAuth }) {
           </h1>
         </div>
 
-        <Rocket></Rocket>
+        <img
+          className="w-[40rem] h-[40rem]"
+          src={theme === "light" ? LightLogo : DarkLogo}
+        />
       </div>
 
       <div className="container gap-24 font-Main flex flex-col justify-start items-center ">
@@ -78,7 +84,7 @@ export default function Home({ userAuth }) {
           <h2 className="text-3xl dark:text-[#fff]  text-[#121212]   font-Main ">
             start using now, and orgnize your life
           </h2>
-          <Link to={"/login"}>
+          <Link to={"/addproject"}>
             <button className="px-7 py-3 active:scale-100 text-[#ffffff] bg-[#018786] dark:text-[#121212] text-3xl dark:bg-[#03dac6] hover:scale-110 transition-all hover:shadow-2xl active:shadow-lg  rounded-full">
               Get started
             </button>

@@ -10,6 +10,7 @@ import Profile from "./page/Profile";
 import { useState } from "react";
 import { Navigate } from "react-router";
 import { motion } from "framer-motion";
+import SignUp from "./page/SignUp";
 
 import app from "./firebase/initFirebase";
 console.log(app);
@@ -32,7 +33,7 @@ function App() {
 
       <div className="min-h-full w-full mx-20 py-24 dark:bg-[#121212]">
         <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/" element={<Home theme={theme}></Home>}></Route>
 
           <Route
             path="/projects"
@@ -70,6 +71,7 @@ function App() {
             }
           ></Route>
           <Route path="/profile" element={<Profile></Profile>}></Route>
+          <Route path="/signup" element={<SignUp></SignUp>}></Route>
         </Routes>
       </div>
     </div>
