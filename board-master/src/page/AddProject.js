@@ -1,21 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Select from "react-select";
+import { getDocs, addDoc,collection,getFirestore} from "firebase/firestore";
+import app from "../firebase/initFirebase";
+import { getAuth } from "firebase/auth";
+
+const db = getFirestore(app);
+const auth = getAuth(app);
+let uid;
 export default function AddProject() {
+
+  
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      uid = auth.currentUser.uid;
+    } else {
+      console.log("no user");
+      
+    }
+    console.log("useri isn",uid);
+    const getUsers = async () => {
+      const userRef = collection(db, "Users");
+      const querySnapshot = await getDocs(userRef);
+      const newData= querySnapshot.docs.map((doc) => ({
+        value: doc.data().userName,
+        label: doc.data().userName,
+        id: doc.id,
+      }));
+      setData(newData);
+    };
+    getUsers();
+  }, []);
+ 
   const [isDone, setIsDone] = useState(false);
+  const [data, setData] = useState([]);
   function handleSelect(data) {
     setSelectedOptions(data);
   }
-  const accounts = [
-    { value: "red", label: "User name", id: 1 },
-    { value: "green", label: "Green", id: 2 },
-    { value: "yellow", label: "Yellow", id: 3 },
-    { value: "blue", label: "Blue", id: 4 },
-    { value: "white", label: "White", id: 5 },
-  ];
+
+ 
   const [selectedOptions, setSelectedOptions] = useState();
+  
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -30,8 +58,35 @@ export default function AddProject() {
       dueDate: Yup.date().required("Required"),
       description: Yup.string().required("Required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       // in here send the values to the firebase login
+    
+      const docRef = await addDoc(collection(db, "projects"), {
+        title: values.title,
+        dueDate: values.dueDate,
+        description: values.description,
+        isDone: isDone,
+        selectedOptions: selectedOptions,
+      });
+      
+      const docRef2 = await addDoc(collection(db, "projects",docRef.id,"tasks"), {
+        task1: values.task1,
+        task2: values.task2,
+        task3: values.task3,
+      });
+      console.log("before the docRef3");
+      const docRef3= await addDoc(collection(db,"assignedProjects",uid,"projects"), {
+        title: values.title,
+        dueDate: values.dueDate,
+        description: values.description,
+        isDone: isDone,
+      });
+      console.log("after the docRef3");
+      const docRef4 = await addDoc(collection(db, "assignedProjects",uid,"tasks"), {
+        task1: values.task1,
+        task2: values.task2,
+        task3: values.task3,
+      });
 
       console.log(
         values.title,
@@ -176,7 +231,7 @@ export default function AddProject() {
                 isSearchable={true}
                 onChange={handleSelect}
                 value={selectedOptions}
-                options={accounts}
+                options={data}
                 placeholder="Assign To"
                 isMulti
               />
