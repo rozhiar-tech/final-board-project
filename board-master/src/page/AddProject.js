@@ -84,12 +84,14 @@ export default function AddProject() {
         isDone: isDone,
       });
     });
-      // console.log("after the docRef3");
-      // const docRef4 = await addDoc(collection(db, "assignedProjects",uid,"tasks"), {
-      //   task1: values.task1,
-      //   task2: values.task2,
-      //   task3: values.task3,
-      // });
+      selectedOptions.map(async (user) => {
+        console.log("after the docRef3");
+      const docRef4 = await addDoc(collection(db, "assignedProjects",user.id,"tasks"), {
+        task1: values.task1,
+        task2: values.task2,
+        task3: values.task3,
+      });
+    });
 
       console.log(
         values.title,
