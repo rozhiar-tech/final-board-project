@@ -9,28 +9,27 @@ import { getAuth } from "firebase/auth";
 
 const db = getFirestore(app);
 const auth = getAuth(app);
-let uid;
+
 export default function AddProject() {
 
-  
+  const[uid,setUid]=useState([]);  
 
   useEffect(() => {
-    if (auth.currentUser) {
-      uid = auth.currentUser.uid;
-    } else {
-      console.log("no user");
-      
-    }
+    
     console.log("useri isn",uid);
     const getUsers = async () => {
       const userRef = collection(db, "Users");
       const querySnapshot = await getDocs(userRef);
-      const newData= querySnapshot.docs.map((doc) => ({
-        value: doc.data().userName,
+      const newData= querySnapshot.docs.map((doc) => {
+        setUid([...uid,doc.id]);
+        return { value: doc.data().userName,
         label: doc.data().userName,
-        id: doc.id,
-      }));
+        id: doc.id,}
+        
+      }
+      );
       setData(newData);
+      
     };
     getUsers();
   }, []);
@@ -39,6 +38,7 @@ export default function AddProject() {
   const [data, setData] = useState([]);
   function handleSelect(data) {
     setSelectedOptions(data);
+
   }
 
  
@@ -75,18 +75,21 @@ export default function AddProject() {
         task3: values.task3,
       });
       console.log("before the docRef3");
-      const docRef3= await addDoc(collection(db,"assignedProjects",uid,"projects"), {
+      selectedOptions.map(async (user) => {
+
+      const docRef3= await addDoc(collection(db,"assignedProjects",user.id,"projects"), {
         title: values.title,
         dueDate: values.dueDate,
         description: values.description,
         isDone: isDone,
       });
-      console.log("after the docRef3");
-      const docRef4 = await addDoc(collection(db, "assignedProjects",uid,"tasks"), {
-        task1: values.task1,
-        task2: values.task2,
-        task3: values.task3,
-      });
+    });
+      // console.log("after the docRef3");
+      // const docRef4 = await addDoc(collection(db, "assignedProjects",uid,"tasks"), {
+      //   task1: values.task1,
+      //   task2: values.task2,
+      //   task3: values.task3,
+      // });
 
       console.log(
         values.title,
