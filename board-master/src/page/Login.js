@@ -11,7 +11,13 @@ import Home from "./Home";
 import LoginSvgDark from "../svg/LoginSvgDark";
 const auth = getAuth(app);
 
-export default function Login({ theme, setTheme, useAuth, setUserAuth }) {
+export default function Login({
+  theme,
+  setTheme,
+  useAuth,
+  setUserAuth,
+  setCurrentUid,
+}) {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -50,8 +56,9 @@ export default function Login({ theme, setTheme, useAuth, setUserAuth }) {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
+      setCurrentUid(user && user.uid);
       console.log("user is signed in");
+
       setUserAuth(true);
       // ...
     } else {

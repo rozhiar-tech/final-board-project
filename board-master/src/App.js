@@ -18,6 +18,7 @@ console.log(app);
 function App() {
   const [theme, setTheme] = useState("light");
   const [userAuth, setUserAuth] = useState(false);
+  const [currentUid, setCurrentUid] = useState();
   return (
     <div className="App  dark:bg-[#121212]  min-h-screen w-full flex justify-start ">
       <div>
@@ -39,7 +40,7 @@ function App() {
             path="/projects"
             element={
               userAuth ? (
-                <Projects></Projects>
+                <Projects currentUid={currentUid}></Projects>
               ) : (
                 <Navigate replace to="/login"></Navigate>
               )
@@ -62,6 +63,7 @@ function App() {
                 <Navigate replace to="/"></Navigate>
               ) : (
                 <Login
+                  setCurrentUid={setCurrentUid}
                   userAuth={userAuth}
                   setUserAuth={setUserAuth}
                   theme={theme}
