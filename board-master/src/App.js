@@ -71,7 +71,17 @@ function App() {
             }
           ></Route>
           <Route path="/profile" element={<Profile></Profile>}></Route>
-          <Route path="/signup" element={<SignUp></SignUp>}></Route>
+          <Route
+            path="/signup"
+            element={
+              <SignUp
+                userAuth={userAuth}
+                setUserAuth={setUserAuth}
+                theme={theme}
+                setTheme={setTheme}
+              ></SignUp>
+            }
+          ></Route>
         </Routes>
       </div>
     </div>
