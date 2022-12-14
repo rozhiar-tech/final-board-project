@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from "react";
 import { motion } from "framer-motion";
-import { getDocs, addDoc,collection,getFirestore,getDoc,doc} from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore,getDoc,doc} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 export default function Profile() {
   const auth = getAuth();

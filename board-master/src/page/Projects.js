@@ -13,22 +13,33 @@ import {
 const db = getFirestore(app);
 export default function Projects({ currentUid }) {
   const [projects, setProjects] = useState([]);
-  const getProjects = async () => {
-    const userRef = collection(db, "projects");
-    // const q = query(userRef, where("selectedOptions.id", "==", currentUid));
-
-    const querySnapshot = await getDocs(userRef);
-    setProjects([]);
-    const newData = querySnapshot.docs.map((doc) => {
-      setProjects((prev) => [...prev, doc.data()]);
-      console.log(doc.data());
-    });
-  };
+  const [tasks, setTasks] = useState([]);
+  
+    
   useEffect(() => {
+    async function getProjects () {
+    
+      const docRef = collection(db, "assignedProjects", currentUid, "projects");
+      const docRef2= collection(db, "assignedProjects", currentUid, "tasks");
+      const docSnap = await getDocs(docRef);
+      const projects = [];
+      docSnap.forEach((doc) => {
+        projects.push(doc.data());
+      });
+      const docSnap2 = await getDocs(docRef2);
+      const tasks = [];
+      docSnap2.forEach((doc) => {
+        tasks.push(doc.data());
+      });
+      setTasks(tasks);
+      setProjects(projects);
+    }
+
     getProjects();
   }, []);
 
   console.log(projects);
+  console.log(tasks);
   console.log(currentUid);
   return (
     <motion.div
@@ -38,15 +49,23 @@ export default function Projects({ currentUid }) {
     >
       {projects.map((project) => (
         <div>
-          {project.selectedOptions.map((assignedUserId) =>
-            assignedUserId.id === currentUid ? (
+          {
+            projects.map((project) => (
               <div>
-                <h1 className="text-7xl text-red-400">{project.title}</h1>
+                <h1>{project.title}</h1>
+                <p>{project.description}</p>
+                <p>{project.dueDate}</p>
+                <p>{project.status}</p>
+                <hr></hr>
               </div>
-            ) : null
-          )}
+
+          ))
+          
+          }
         </div>
       ))}
+
     </motion.div>
   );
 }
+
