@@ -4,15 +4,23 @@ import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import app from "../firebase/initFirebase";
 import { Route } from "react-router";
-import Home from "./Home";
+
 import SignUpSvg from "../svg/SignUpSvg";
 import LoginSvgDark from "../svg/LoginSvgDark";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore,doc,  addDoc,collection, setDoc } from "firebase/firestore";
+
+
+const db = getFirestore(app);
+const auth = getAuth(app);
 
 export default function SignUp({ theme, setTheme, useAuth, setUserAuth }) {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [image, setImage] = useState(null);
+
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -27,11 +35,30 @@ export default function SignUp({ theme, setTheme, useAuth, setUserAuth }) {
         .min(8, "Must be 8 characters or more")
         .required("Required"),
     }),
-    onSubmit: (values) => {
+    onSubmit:  (values) => {
       // in here send the values to the firebase login
+      
+    
+      createUserWithEmailAndPassword (auth, values.email, values.password)
+        .then(async (userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log(user.uid);
+          await setDoc(doc(db, "Users",user.uid), {
+            userName: values.userName,
+            email: values.email,
+            role: isAdmin,
+          });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
 
       console.log(values.userName, values.email, values.password, isAdmin);
     },
+
   });
   const [Hidepassword, setHidePassword] = useState("password");
 
@@ -155,6 +182,7 @@ export default function SignUp({ theme, setTheme, useAuth, setUserAuth }) {
                 </label>
               </div>
             </label>
+            <input type="file" onChange={(e)=>{setImage(e.target.files)}} /> 
             <button className="w-96 active:scale-100 text-[#ffffff] bg-[#018786] dark:text-[#121212] text-3xl dark:bg-[#03dac6] hover:scale-110 transition-all hover:shadow-2xl active:shadow-lg px-3 py-3 rounded-full">
               Sign Up
             </button>

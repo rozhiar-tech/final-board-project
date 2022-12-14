@@ -74,24 +74,23 @@ export default function AddProject() {
         task2: values.task2,
         task3: values.task3,
       });
-      console.log("before the docRef3");
+      
+      
       selectedOptions.map(async (user) => {
-
       const docRef3= await addDoc(collection(db,"assignedProjects",user.id,"projects"), {
         title: values.title,
         dueDate: values.dueDate,
         description: values.description,
         isDone: isDone,
       });
-    });
-      selectedOptions.map(async (user) => {
-        console.log("after the docRef3");
-      const docRef4 = await addDoc(collection(db, "assignedProjects",user.id,"tasks"), {
+      console.log("docRef3",docRef3.id);
+      await addDoc(collection(db, "assignedProjects",user.id,"projects",docRef3.id,"tasks"), {
         task1: values.task1,
         task2: values.task2,
         task3: values.task3,
       });
     });
+    
 
       console.log(
         values.title,
