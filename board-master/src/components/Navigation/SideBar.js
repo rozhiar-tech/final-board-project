@@ -4,7 +4,13 @@ import { NavLink, useParams, useLocation } from "react-router-dom";
 import ModeToggle from "../theme/ModeToggle";
 import { motion } from "framer-motion";
 import { getAuth, signOut } from "firebase/auth";
-export default function SideBar({ theme, setTheme, userAuth, setUserAuth }) {
+export default function SideBar({
+  theme,
+  setTheme,
+  isAdmin,
+  userAuth,
+  setUserAuth,
+}) {
   const { projects } = useParams();
 
   const path = useLocation();
@@ -49,6 +55,8 @@ export default function SideBar({ theme, setTheme, userAuth, setUserAuth }) {
       icon: "log-in-outline",
     },
   ];
+
+  console.log(isAdmin);
 
   return (
     <motion.div

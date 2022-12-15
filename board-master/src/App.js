@@ -19,11 +19,13 @@ function App() {
   const [theme, setTheme] = useState("light");
   const [userAuth, setUserAuth] = useState(false);
   const [currentUid, setCurrentUid] = useState();
+  const [isAdmin, setIsAdmin] = useState();
   return (
     <div className="App  dark:bg-[#121212]  min-h-screen w-full flex justify-start ">
       <div>
         <div className=" min-h-full relative rounded-r-full overflow-hidden w-52">
           <SideBar
+            isAdmin={isAdmin}
             setUserAuth={setUserAuth}
             userAuth={userAuth}
             theme={theme}
@@ -63,6 +65,7 @@ function App() {
                 <Navigate replace to="/"></Navigate>
               ) : (
                 <Login
+                  setIsAdmin={setIsAdmin}
                   setCurrentUid={setCurrentUid}
                   userAuth={userAuth}
                   setUserAuth={setUserAuth}

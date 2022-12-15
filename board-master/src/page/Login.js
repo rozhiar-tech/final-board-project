@@ -17,6 +17,7 @@ export default function Login({
   useAuth,
   setUserAuth,
   setCurrentUid,
+  setIsAdmin,
 }) {
   const formik = useFormik({
     initialValues: {
@@ -58,7 +59,8 @@ export default function Login({
       // https://firebase.google.com/docs/reference/js/firebase.User
       setCurrentUid(user && user.uid);
       console.log("user is signed in");
-
+      setIsAdmin(user && user.role);
+      console.log(user);
       setUserAuth(true);
       // ...
     } else {
