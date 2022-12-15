@@ -58,7 +58,7 @@ export default function Projects({ currentUid }) {
           <p>{project.description}</p>
           <p>{project.dueDate}</p>
           <p>{project.status}</p>
-          <p>{project.id}</p>
+      
           {tasks.map((task) => (
             <div>
               <div>
