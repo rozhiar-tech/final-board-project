@@ -89,7 +89,14 @@ export default function SideBar({
               <span className="text-xl">Logout</span>
               <ion-icon name="log-out-outline"></ion-icon>
             </button>
-          ) : !userAuth && page.pageName === "Profile" ? null : (
+          ) : !userAuth && page.pageName === "Profile" ? null : userAuth &&
+            !isAdmin &&
+            page.iconFill === "add" ? null : userAuth &&
+            !isAdmin &&
+            page.path === "/signup" ? null : !userAuth &&
+            page.iconFill === "add" ? null : !userAuth &&
+            page.path === "/signup" ? null : !userAuth &&
+            page.pageName === "Projects" ? null : (
             <li className="">
               <NavLink
                 to={page.path}

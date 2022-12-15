@@ -12,6 +12,10 @@ import { Navigate } from "react-router";
 import { motion } from "framer-motion";
 import SignUp from "./page/SignUp";
 
+import { getFirestore, getDoc, doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { useEffect } from "react";
+
 import app from "./firebase/initFirebase";
 console.log(app);
 
@@ -19,13 +23,45 @@ function App() {
   const [theme, setTheme] = useState("light");
   const [userAuth, setUserAuth] = useState(false);
   const [currentUid, setCurrentUid] = useState();
+
+  const auth = getAuth();
+  const db = getFirestore();
+  const [user, setUser] = useState(null);
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        console.log(user);
+        const getUsers = async () => {
+          const docRef = doc(db, "Users", user.uid);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            setData(...data, docSnap.data());
+            console.log(docSnap.data());
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        };
+
+        getUsers();
+      } else {
+        setUser(null);
+      }
+    });
+  }, [currentUid]);
   const [isAdmin, setIsAdmin] = useState();
+
+  console.log(data.role);
   return (
     <div className="App  dark:bg-[#121212]  min-h-screen w-full flex justify-start ">
       <div>
         <div className=" min-h-full relative rounded-r-full overflow-hidden w-52">
           <SideBar
-            isAdmin={isAdmin}
+            isAdmin={data.role}
             setUserAuth={setUserAuth}
             userAuth={userAuth}
             theme={theme}
@@ -51,7 +87,7 @@ function App() {
           <Route
             path="/Addproject"
             element={
-              userAuth && userAuth ? (
+              userAuth && data && data.role ? (
                 <AddProject></AddProject>
               ) : (
                 <Navigate replace to="/login"></Navigate>
@@ -65,6 +101,7 @@ function App() {
                 <Navigate replace to="/"></Navigate>
               ) : (
                 <Login
+                  data={data}
                   setIsAdmin={setIsAdmin}
                   setCurrentUid={setCurrentUid}
                   userAuth={userAuth}
@@ -75,16 +112,23 @@ function App() {
               )
             }
           ></Route>
-          <Route path="/profile" element={<Profile></Profile>}></Route>
+          <Route
+            path="/profile"
+            element={<Profile data={data}></Profile>}
+          ></Route>
           <Route
             path="/signup"
             element={
-              <SignUp
-                userAuth={userAuth}
-                setUserAuth={setUserAuth}
-                theme={theme}
-                setTheme={setTheme}
-              ></SignUp>
+              userAuth && data && data.role ? (
+                <SignUp
+                  userAuth={userAuth}
+                  setUserAuth={setUserAuth}
+                  theme={theme}
+                  setTheme={setTheme}
+                ></SignUp>
+              ) : (
+                <Navigate replace to="/"></Navigate>
+              )
             }
           ></Route>
         </Routes>
