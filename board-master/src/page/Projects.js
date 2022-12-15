@@ -9,38 +9,42 @@ import {
   collection,
   getFirestore,
   where,
+  doc,
+  getDoc,
 } from "firebase/firestore";
 const db = getFirestore(app);
 export default function Projects({ currentUid }) {
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const getProjects = async () => {
-    const docRef = collection(db, "assignedProjects", currentUid, "projects");
-    const docRef2 = collection(db, "assignedProjects", currentUid, "tasks");
-    const docSnap = await getDocs(docRef);
-    const projectsArr = [];
-    console.log(docSnap);
-    docSnap.forEach((doc) => {
-      projectsArr.push(doc.data());
-    });
-    const docSnap2 = await getDocs(docRef2);
-    const tasksArr = [];
-    docSnap2.forEach((doc) => {
-      tasksArr.push(doc.data());
-    });
-    setTasks(tasksArr);
-    console.log(tasksArr);
-    console.log(projectsArr);
-    setProjects(projectsArr);
-  };
+  
 
   useEffect(() => {
-    getProjects();
-  }, []);
+    const getProjects = async () => {
+    const docRef = query(collection(db, "assignedProjects", currentUid, "projects"),where("isDone", "==", false));
+    // amay xwarawa bo aw projecta naya ka tawaw bwn
+    // const docRef3 = query(collection(db, "assignedProjects", currentUid, "projects"),where("isDone", "==", true));
+    const docSnap = await getDocs(docRef);
+    const projectsArr = [];
+    let documentId;
+    docSnap.forEach((doc) => {
+      projectsArr.push(doc.data());
+      documentId = doc.id;  
+      // console.log(doc.data()); 
+    });
+    console.log(documentId);
+    setProjects(projectsArr);
 
-  console.log(projects);
-  console.log(tasks);
-  console.log(currentUid);
+    const taskRef = query(collection(db, "assignedProjects", currentUid,"tasks"),where("projectId", "==", documentId));
+
+    const taskSnap = await getDocs(taskRef);
+    
+    const tasksArr=taskSnap.docs.map((doc) => doc.data());
+    setTasks(tasksArr);
+    console.log(tasksArr);
+  };
+  getProjects();
+}, []);
+
 
   return (
     <motion.div
@@ -51,10 +55,10 @@ export default function Projects({ currentUid }) {
       {projects.map((project) => (
         <div className="text-5xl text-red-400">
           <h1>{project.title}</h1>
-
           <p>{project.description}</p>
           <p>{project.dueDate}</p>
           <p>{project.status}</p>
+          <p>{project.id}</p>
           {tasks.map((task) => (
             <div>
               <div>

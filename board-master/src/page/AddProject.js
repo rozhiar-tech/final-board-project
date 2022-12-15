@@ -84,12 +84,15 @@ export default function AddProject() {
         isDone: isDone,
       });
       console.log("docRef3",docRef3.id);
-      await addDoc(collection(db, "assignedProjects",user.id,"projects",docRef3.id,"tasks"), {
+      await addDoc(collection(db, "assignedProjects",user.id,"tasks"), {
         task1: values.task1,
         task2: values.task2,
         task3: values.task3,
+        projectId:docRef3.id,
       });
+      
     });
+
     
 
       console.log(
@@ -102,6 +105,15 @@ export default function AddProject() {
         values.task2,
         values.task3
       );
+      // values.title = "";
+      // values.dueDate = "";
+      // values.description = "";
+      // values.task1 = "";
+      // values.task2 = "";
+      // values.task3 = "";
+      // setIsDone(false);
+      // setSelectedOptions();
+
     },
   });
 
