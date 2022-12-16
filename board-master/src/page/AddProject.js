@@ -82,6 +82,7 @@ export default function AddProject() {
         dueDate: values.dueDate,
         description: values.description,
         isDone: isDone,
+        projectId:docRef.id,
       });
       console.log("docRef3",docRef3.id);
       await addDoc(collection(db, "assignedProjects",user.id,"tasks"), {
