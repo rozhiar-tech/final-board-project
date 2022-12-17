@@ -1,5 +1,6 @@
 const itemTypes = {
     CARD: 'card',
+    DIV: 'div',
 };
 
 
