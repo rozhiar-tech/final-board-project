@@ -40,7 +40,10 @@ const ProjectCard = ({projects, markProjectDone, deleteProject,tasksToShow}) => 
                     onClick={() => {
                       setKey(projects.id);
                       setDropDown(dropDown === false ? true : false);
-                    }}
+
+                    }
+                    
+                    }
                     className="mx-5 dark:text-[#bb86fc] text-[#6200ee]"
                   >
                     {dropDown && key === projects.title ? (
@@ -68,7 +71,7 @@ const ProjectCard = ({projects, markProjectDone, deleteProject,tasksToShow}) => 
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.75, ease: "easeOut" }}
                 className={`h-fit transition-all ${
-                  dropDown && key === projects.projects.title ? "" : "hidden"
+                  dropDown && key === projects.title ? "" : "hidden"
                 }  w-full py-2`}
               >
                 <div
@@ -85,13 +88,13 @@ const ProjectCard = ({projects, markProjectDone, deleteProject,tasksToShow}) => 
   
                   <p>{projects.projects.status}</p>
                 </div>
-  
                 {tasksToShow}
+  
                 
               </motion.div>
+             
             </div>
     
-
     )
     };
 
