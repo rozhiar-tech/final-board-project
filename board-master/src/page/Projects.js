@@ -30,13 +30,6 @@ export default function Projects({ currentUid }) {
   const [progressPercentage, setProgressPercentage] = useState(0);
 
 
-  // drop: (item, monitor) => {
-  //   const delta = monitor.getDifferenceFromInitialOffset();
-  //   let left = Math.round(item.left + delta.x);
-  //   let top = Math.round(item.top + delta.y);
-  //   moveCard(item.id, left, top);
-  //   return undefined;
-
   const [{isOver}, dropRef] =useDrop(
     {
       accept:itemTypes.CARD,
@@ -98,7 +91,7 @@ export default function Projects({ currentUid }) {
               projectId:doc.id
             }
           );
-          setDocumentId(doc.id);
+          setDocumentId(...doc.id);
 
           // console.log(doc.data());
         });
@@ -142,6 +135,8 @@ export default function Projects({ currentUid }) {
     };
     getProgressPercentage();
   }, [projects, doneProjects, tasks]);
+
+  
   function markProjectDone(project) {
     const projectRef = collection(
       db,
